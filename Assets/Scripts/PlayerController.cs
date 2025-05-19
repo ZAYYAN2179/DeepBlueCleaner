@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
         berenang.y = Input.GetAxisRaw("Vertical");
         transform.position += berenang * speed * Time.deltaTime;
 
-        if (berenang.x != 0) // hanya aktif jika bergerak kiri atau kanan
+        if (berenang.x != 0)
         {
             karakter.SetBool("Swim", true);
         }
@@ -37,8 +37,8 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
-        // Tambahkan batas gerak player di sini
-        float minX = -9.5f, maxX = 9.5f;
+        // Batas gerak player
+        float minX = -10f, maxX = 10f;
         float minY = -3.5f, maxY = 3.5f;
 
         Vector3 pos = transform.position;
