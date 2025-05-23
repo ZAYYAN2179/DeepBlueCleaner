@@ -38,8 +38,8 @@ public class PlayerController : MonoBehaviour
         }
 
         // Batas gerak player
-        float minX = -10f, maxX = 10f;
-        float minY = -3.5f, maxY = 3.5f;
+        float minX = -14.23f, maxX = 14.23f;
+        float minY = -8f, maxY = 8f;
 
         Vector3 pos = transform.position;
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
