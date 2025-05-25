@@ -8,9 +8,14 @@ public class PlayerController : MonoBehaviour
 
     public Animator karakter;
 
+    public bool gameOver = false;
+
+    public int maxHealth = 3;
+    public int currentHealth;
+
     void Start()
     {
-
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -45,5 +50,16 @@ public class PlayerController : MonoBehaviour
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
         transform.position = pos;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Fish"))
+        {
+            currentHealth--;
+            Debug.Log("Current Health: " + currentHealth);
+
+            Destroy(other.gameObject);
+        }
     }
 }
