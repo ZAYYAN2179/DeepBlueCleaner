@@ -3,19 +3,39 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
+    // Player
     private float speed = 4f;
     Vector3 berenang;
-
     public Animator karakter;
 
-    public bool gameOver = false;
 
-    public int maxHealth = 3;
+    // Health
+    public int maxHealth = 0;
+    public int damage = 0;
     public int currentHealth;
+    public HealthBar healthBar;
+
+
+    // Breath
+    public int maxBreath = 0;
+    public int currentBreath;
+    public BreathBar breathBar;
+    public float breathDecreaseRate = 1f; // seconds
+    private float breathTimer;
+
+
+     // Oxygen Effects
+    public GameObject oxygenEffectUI; // Drag Panel merah ke sini
+    public float effectDuration = 0.5f;
 
     void Start()
     {
         currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+
+        currentBreath = maxBreath;
+        breathBar.SetMaxBreath(maxBreath);
+        breathTimer = breathDecreaseRate;
     }
 
     void Update()
@@ -50,13 +70,49 @@ public class PlayerController : MonoBehaviour
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
         transform.position = pos;
+
+        // Oksigen
+        breathTimer -= Time.deltaTime;
+        if (breathTimer <= 0f)
+        {
+            breathTimer = breathDecreaseRate;
+
+            if (currentBreath >= 0)
+            {
+                currentBreath--;
+                breathBar.SetBreath(currentBreath);
+
+                Debug.Log("Current Breath: " + currentBreath);
+            }
+            else
+            {
+                // Kalau oksigen habis, kurangi nyawa
+                currentHealth -= damage;
+                healthBar.SetHealth(currentHealth);
+
+                StartCoroutine(ShowOxygenEffect());
+            }
+        }
+    }
+
+    private IEnumerator ShowOxygenEffect()
+    {
+        if (oxygenEffectUI != null)
+        {
+            oxygenEffectUI.SetActive(true);
+            yield return new WaitForSeconds(effectDuration);
+            oxygenEffectUI.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Fish"))
         {
-            currentHealth--;
+            currentHealth -= damage;
+
+            healthBar.SetHealth(currentHealth);
+
             Debug.Log("Current Health: " + currentHealth);
 
             Destroy(other.gameObject);
