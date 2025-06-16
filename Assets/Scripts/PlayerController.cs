@@ -24,9 +24,14 @@ public class PlayerController : MonoBehaviour
     private float breathTimer;
 
 
-     // Oxygen Effects
+    // Oxygen Effects
     public GameObject oxygenEffectUI; // Drag Panel merah ke sini
     public float effectDuration = 0.5f;
+
+
+    // Score
+    public int score = 0;
+    public int currentScore;
 
     void Start()
     {
@@ -36,6 +41,8 @@ public class PlayerController : MonoBehaviour
         currentBreath = maxBreath;
         breathBar.SetMaxBreath(maxBreath);
         breathTimer = breathDecreaseRate;
+
+        currentScore = score;
     }
 
     void Update()
@@ -110,10 +117,18 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Fish"))
         {
             currentHealth -= damage;
-
             healthBar.SetHealth(currentHealth);
-
             Debug.Log("Current Health: " + currentHealth);
+            Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("Trash"))
+        {
+            TrashItem trash = other.GetComponent<TrashItem>();
+            
+            currentScore += trash.trashScore;
+
+            Debug.Log("Sampah : " + currentScore);
 
             Destroy(other.gameObject);
         }

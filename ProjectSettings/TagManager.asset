@@ -4,7 +4,9 @@
 TagManager:
   serializedVersion: 3
   tags:
+  - Trash
   - Fish
+  - BatuKarang
   layers:
   - Default
   - TransparentFX
