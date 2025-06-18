@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
     public int score = 0;
     public int currentScore;
 
+    //Fungsi Pause
+    private bool IsGamePaused => Time.timeScale == 0f;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -47,6 +50,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (IsGamePaused)
+            return; // Jika game sedang pause, hentikan seluruh logic
+
         berenang.x = Input.GetAxisRaw("Horizontal");
         berenang.y = Input.GetAxisRaw("Vertical");
         transform.position += berenang * speed * Time.deltaTime;
@@ -93,7 +99,6 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                // Kalau oksigen habis, kurangi nyawa
                 currentHealth -= damage;
                 healthBar.SetHealth(currentHealth);
 
@@ -101,6 +106,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
 
     private IEnumerator ShowOxygenEffect()
     {
