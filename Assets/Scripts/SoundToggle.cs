@@ -6,17 +6,40 @@ public class SoundToggle : MonoBehaviour
     public GameObject soundOffButton;
     public AudioSource audioSource;
 
-    public void ToggleSoundOn()
+    private bool isPaused = false;
+
+    void Start()
     {
-        audioSource.Play();                 
-        soundOffButton.SetActive(false);   
-        soundOnButton.SetActive(true);     
+        if (!audioSource.isPlaying)
+        {
+            audioSource.Play(); // Mainkan sekali di awal
+        }
+
+        soundOnButton.SetActive(true);
+        soundOffButton.SetActive(false);
     }
 
     public void ToggleSoundOff()
     {
-        audioSource.Pause();              
-        soundOnButton.SetActive(false);    
-        soundOffButton.SetActive(true);    
+        if (audioSource.isPlaying)
+        {
+            audioSource.Pause(); // Ini hanya menjeda, tidak mengulang
+            isPaused = true;
+        }
+
+        soundOnButton.SetActive(false);
+        soundOffButton.SetActive(true);
+    }
+
+    public void ToggleSoundOn()
+    {
+        if (isPaused)
+        {
+            audioSource.UnPause(); // Lanjut dari titik terakhir
+        }
+
+        soundOnButton.SetActive(true);
+        soundOffButton.SetActive(false);
+        isPaused = false;
     }
 }

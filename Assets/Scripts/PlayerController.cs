@@ -148,6 +148,16 @@ public class PlayerController : MonoBehaviour
 
             Destroy(other.gameObject);
         }
+        if (other.CompareTag("Chest"))
+        {
+            currentBreath = maxBreath; 
+            breathBar.SetBreath(currentBreath);
+
+            Debug.Log("Dapat chest! Breath penuh: " + currentBreath);
+
+            Destroy(other.gameObject);
+        }
+
     }
 
     //fungsi pengurangan nafas
