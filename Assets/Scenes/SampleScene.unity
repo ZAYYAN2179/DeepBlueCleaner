@@ -4978,7 +4978,7 @@ Transform:
   m_GameObject: {fileID: 1815541900}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 12.552479, z: -10}
+  m_LocalPosition: {x: 0, y: 12.55248, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7900,6 +7900,7 @@ GameObject:
   - component: {fileID: 2134590690}
   - component: {fileID: 2134590691}
   - component: {fileID: 2134590692}
+  - component: {fileID: 2134590693}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -8018,7 +8019,7 @@ Transform:
   m_GameObject: {fileID: 2134590684}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 12.552479, z: 0}
+  m_LocalPosition: {x: 0, y: 12.55248, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8211,6 +8212,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2134590693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134590684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a9cd8cac10f0764cbf89a70509d7460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashSpeed: 10
+  dashDuration: 0.3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

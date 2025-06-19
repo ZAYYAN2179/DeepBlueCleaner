@@ -139,4 +139,12 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
+
+    //fungsi pengurangan nafas
+    public void ReduceBreath(int amount)
+    {
+        currentBreath -= amount;
+        if (currentBreath < 0) currentBreath = 0;
+        breathBar.SetBreath(currentBreath);
+    }
 }
