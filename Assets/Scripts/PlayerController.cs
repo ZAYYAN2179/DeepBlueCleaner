@@ -36,6 +36,9 @@ public class PlayerController : MonoBehaviour
     //Fungsi Pause
     private bool IsGamePaused => Time.timeScale == 0f;
 
+    //Fungsi Game Over
+    public GameObject gameOverText;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -105,6 +108,13 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(ShowOxygenEffect());
             }
         }
+
+        if(currentHealth <= 0)
+        {
+            currentHealth = 0;
+            healthBar.SetHealth(currentHealth);
+            GameOver();
+        }
     }
 
 
@@ -146,5 +156,20 @@ public class PlayerController : MonoBehaviour
         currentBreath -= amount;
         if (currentBreath < 0) currentBreath = 0;
         breathBar.SetBreath(currentBreath);
+    }
+
+    public void GameOver()
+    {
+        // Nonaktifkan player
+        gameObject.SetActive(false);
+
+        // Tampilkan Game Over Text
+        if (gameOverText != null)
+        {
+            gameOverText.SetActive(true);
+        }
+
+        // Pause game
+        Time.timeScale = 0f;
     }
 }
