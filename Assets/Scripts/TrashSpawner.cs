@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class TrashSpawner : MonoBehaviour
@@ -6,22 +7,38 @@ public class TrashSpawner : MonoBehaviour
 
     float spawnRangeX = 15.0f;
 
-    public float startDelay = 2.0f;
+    public float initialSpawnInterval = 2.0f;
+    public float minSpawnInterval = 0.5f;
+    public float intervalDecreaseRate = 0.1f;
+    public float spawnInterval;
 
-    public float spawnInterval = 2.0f;
-
-    void Start()
+    private void Start()
     {
-        InvokeRepeating("SpawnRandomTrash", startDelay, spawnInterval);
+        spawnInterval = initialSpawnInterval;
+        StartCoroutine(SpawnTrashLoop());
+        StartCoroutine(DecreaseSpawnInterval());
     }
 
-    
-    void Update()
+    private IEnumerator SpawnTrashLoop()
     {
-
+        yield return new WaitForSeconds(2.0f); // Delay awal
+        while (true)
+        {
+            SpawnRandomTrash();
+            yield return new WaitForSeconds(spawnInterval);
+        }
     }
 
-    void SpawnRandomTrash()
+    private IEnumerator DecreaseSpawnInterval()
+    {
+        while (spawnInterval > minSpawnInterval)
+        {
+            yield return new WaitForSeconds(10f); // tiap 10 detik
+            spawnInterval = Mathf.Max(minSpawnInterval, spawnInterval - intervalDecreaseRate);
+        }
+    }
+
+    private void SpawnRandomTrash()
     {
         Vector3 spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 12, 0);
 

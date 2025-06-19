@@ -1,13 +1,38 @@
+using System.Collections;
 using UnityEngine;
 
 public class FishSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject fishPrefab;
-    [SerializeField] private float spawnInterval = 2f;
+
+    [SerializeField] private float initialSpawnInterval = 2f;
+    [SerializeField] private float minSpawnInterval = 0.5f;
+    [SerializeField] private float intervalDecreaseRate = 0.1f;
+
+
+    private float spawnInterval;
     
     private void Start()
     {
-        InvokeRepeating(nameof(SpawnFish), 0f, spawnInterval);
+        spawnInterval = initialSpawnInterval;
+        StartCoroutine(SpawnFishLoop());
+    }
+
+    private IEnumerator SpawnFishLoop()
+    {
+        while (true)
+        {
+            SpawnFish();
+            yield return new WaitForSeconds(spawnInterval);
+        }
+    }
+
+    private IEnumerator DecreaseInterval()
+    {
+        while (spawnInterval > minSpawnInterval) {
+            yield return new WaitForSeconds(10f);
+            spawnInterval = Mathf.Max(minSpawnInterval, spawnInterval - intervalDecreaseRate);
+        }
     }
     
     private void SpawnFish()
