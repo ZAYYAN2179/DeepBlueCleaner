@@ -3,29 +3,33 @@ using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
-    public GameObject pausePanel; // panel pause (Raw Image + tombol-tombol)
+    public GameObject pausePanel;
+    public GameObject pauseBackground;
 
     void Start()
     {
-        pausePanel.SetActive(false); // sembunyikan saat game mulai
-        Time.timeScale = 1f; // pastikan game berjalan
+        pausePanel.SetActive(false);
+        pauseBackground.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     public void PauseGame()
     {
-        pausePanel.SetActive(true);  // tampilkan UI Pause
-        Time.timeScale = 0f;         // hentikan game
+        pauseBackground.SetActive(true);
+        pausePanel.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     public void ResumeGame()
     {
-        pausePanel.SetActive(false); // sembunyikan UI Pause
-        Time.timeScale = 1f;         // lanjutkan game
+        pausePanel.SetActive(false);
+        pauseBackground.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     public void RestartGame()
     {
-        Time.timeScale = 1f; // Pastikan timeScale dinormalkan kembali
+        Time.timeScale = 1f;
         SceneManager.LoadScene("SampleScene");
     }
 }

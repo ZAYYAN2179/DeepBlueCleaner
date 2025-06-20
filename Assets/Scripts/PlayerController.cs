@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -37,7 +38,12 @@ public class PlayerController : MonoBehaviour
     private bool IsGamePaused => Time.timeScale == 0f;
 
     //Fungsi Game Over
+    public GameObject gameOverBackground;
     public GameObject gameOverText;
+
+    //Waktu
+    public TextMeshProUGUI playTimeText;
+    private float playTime = 0f;
 
     void Start()
     {
@@ -54,11 +60,14 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (IsGamePaused)
-            return; // Jika game sedang pause, hentikan seluruh logic
+            return;
 
-        berenang.x = Input.GetAxisRaw("Horizontal");
-        berenang.y = Input.GetAxisRaw("Vertical");
-        transform.position += berenang * speed * Time.deltaTime;
+            playTime += Time.deltaTime;
+
+
+            berenang.x = Input.GetAxisRaw("Horizontal");
+            berenang.y = Input.GetAxisRaw("Vertical");
+            transform.position += berenang * speed * Time.deltaTime;
 
         if (berenang.x != 0)
         {
@@ -179,7 +188,16 @@ public class PlayerController : MonoBehaviour
             gameOverText.SetActive(true);
         }
 
-        // Pause game
+        if (gameOverBackground != null) gameOverBackground.SetActive(true);
+
+        if (playTimeText != null)
+    {
+            int minutes = Mathf.FloorToInt(playTime / 60f);
+            int seconds = Mathf.FloorToInt(playTime % 60f);
+            string formattedTime = string.Format("Play Time: {0:00}:{1:00}", minutes, seconds);
+            playTimeText.text = formattedTime;
+        }
+
         Time.timeScale = 0f;
     }
 }
